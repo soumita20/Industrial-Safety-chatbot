@@ -1,6 +1,6 @@
 {
     "editor.fontWeight": "normal",
-    "python.pythonPath": "C:\\Users\\Soumita\\anaconda3\\python.exe",
+    "python.pythonPath": "C:\\Users\\Soumita\\.conda\\envs\\machinelearning\\python.exe",
     "python.condaPath": "C:\\Users\\Soumita\\anaconda3\\Scripts\\conda.exe",
     "jupyter.jupyterServerType": "local"
 }
