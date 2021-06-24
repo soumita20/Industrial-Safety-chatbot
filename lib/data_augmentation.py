@@ -1,10 +1,5 @@
 from random import shuffle
 import random
-from nlpaug.util import Action
-import nlpaug.flow as naf
-import nlpaug.augmenter.sentence as nas
-import nlpaug.augmenter.word as naw
-import nlpaug.augmenter.char as nac
 import numpy as np
 import pandas as pd
 from os import replace
@@ -12,17 +7,12 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from nltk.util import ngrams
-from sklearn.feature_extraction.text import CountVectorizer
 from collections import defaultdict
 from collections import Counter
 from nltk.tokenize import word_tokenize
 #import gensim
 import string
 from tqdm import tqdm
-import keras_preprocessing
-from keras_preprocessing.text import Tokenizer
-from keras_preprocessing.sequence import pad_sequences
-from sklearn.utils import shuffle
 
 
 random.seed(1)
@@ -54,7 +44,6 @@ def gen_eda(data, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
         aug_sentences = eda(sentence, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, p_rd=alpha_rd, num_aug=num_aug)
         for j in aug_sentences:
             upsampled_df = upsampled_df.append({'Accident_Level': label, 'Description_DL': j}, ignore_index=True)
-        print(upsampled_df)
     return upsampled_df
 
 def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):
@@ -150,7 +139,7 @@ def synonym_replacement(words, n):
 	new_words = words.copy()
  	
 	random_word_list = list(set([word for word in words if word not in stop_words]))
-	random.shuffle(random_word_list)
+	#random.shuffle(random_word_list)
 	num_replaced = 0
 	for random_word in random_word_list:
 		synonyms = get_synonyms(random_word)
