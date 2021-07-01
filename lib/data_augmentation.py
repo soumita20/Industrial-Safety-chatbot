@@ -37,13 +37,13 @@ def upsample(data):
     return df_upsampled_data
 
 def gen_eda(data, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
-    upsampled_df = pd.DataFrame(columns=['Accident_Level', 'Description_DL'])
+    upsampled_df = pd.DataFrame(columns=['Accident_Level', 'Description'])
     for i in data.itertuples():
         label=i.Accident_Level
-        sentence=i.Description_DL
+        sentence=i.Description
         aug_sentences = eda(sentence, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, p_rd=alpha_rd, num_aug=num_aug)
         for j in aug_sentences:
-            upsampled_df = upsampled_df.append({'Accident_Level': label, 'Description_DL': j}, ignore_index=True)
+            upsampled_df = upsampled_df.append({'Accident_Level': label, 'Description': j}, ignore_index=True)
     return upsampled_df
 
 def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):

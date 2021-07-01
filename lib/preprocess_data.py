@@ -1,3 +1,8 @@
+import spacy
+
+spacy.prefer_gpu()
+nlp = spacy.load("en_core_web_sm")
+from spacy import displacy
 
 import re
 def prepare_ml_data1(text, flg_stemm=True, flg_lemm=True):
@@ -184,4 +189,8 @@ def replace_contractions(text,contractions,contractions_re):
   def replace(match):
       return contractions[match.group(0)]
   return contractions_re.sub(replace, text)
-  
+
+def named_entity_recognition(data):
+    tokens = nlp(''.join(str(data.tolist())))
+    items = [x.text for x in tokens.ents]
+    Counter(items).most_common(20)
