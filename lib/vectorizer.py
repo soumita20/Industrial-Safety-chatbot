@@ -3,6 +3,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression 
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.multiclass import OneVsRestClassifier
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.tag import pos_tag
+from nltk.chunk import conlltags2tree, tree2conlltags
+from pprint import pprint
 
 #important parameters
 #1. max-df : it is used to remove terms that are very frequent, also known as "corpus specific stop words."
@@ -42,12 +47,18 @@ def tfidf_vectorizer_features(data,ngrams,max_features=None):
   features=vectorizer.get_feature_names()
   return transformed_data.toarray(),features
 
-#TF IDF vectorizer bigrams
-
-#TF IDF vectorizer trigrams
-
-#TF IDF vectorizer multigrams
-
-#WordToVec
-
-#GlOve
+#named entity recognition
+def named_entity_recognition(sent):
+    sent = nltk.word_tokenize(sent)
+    #We get a list of tuples containing the individual words in the sentence and their associated part-of-speech.
+    sent = nltk.pos_tag(sent)
+    #Now we’ll implement noun phrase chunking to identify named entities using a regular expression consisting of rules that indicate how sentences should be chunked.Now we’ll implement noun phrase chunking to identify named entities using a regular expression consisting of rules that indicate how sentences should be chunked.
+    #Our chunk pattern consists of one rule, that a noun phrase, NP, should be formed whenever the chunker finds an optional determiner, DT, followed by any number of adjectives, JJ, and then a noun, NN.
+    pattern = 'NP: {<DT>?<JJ>*<NN>}'
+    #Chunking
+    cp = nltk.RegexpParser(pattern)
+    cs = cp.parse(sent)
+    iob_tagged = tree2conlltags(cs)
+    #In this representation, there is one token per line, each with its part-of-speech tag and its named entity tag. Based on this training corpus, we can construct a tagger that can be used to label new sentences; and use the nltk.chunk.conlltags2tree() function to convert the tag sequences into a chunk tree.
+    pprint(iob_tagged)
+    return cs
