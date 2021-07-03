@@ -16,6 +16,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import AdaBoostClassifier,RandomForestClassifier,BaggingClassifier,GradientBoostingClassifier
 from catboost import CatBoostClassifier
 from xgboost import XGBClassifier
+import time
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import multilabel_confusion_matrix,classification_report,confusion_matrix
 from sklearn.model_selection import cross_val_score
@@ -109,7 +110,7 @@ def train_test_allmodels(X_train_common, X_test_common, y_train, y_test, scale):
     i = 1
     for name, classifier in models:
         # Train and Test the model
-        reg_resultsDf = train_test_model(classifier, name, X_train_common, X_test_common, y_train, y_test, 'none', i, scale, 'no', 'no')
+        reg_resultsDf = train_test_model(classifier, name, X_train_common, X_test_common, y_train, y_test, 'none', i, scale, 'yes', 'no')
 
         # Store the accuracy results for each model in a dataframe for final comparison
         resultsDf_common = pd.concat([resultsDf_common, reg_resultsDf])
