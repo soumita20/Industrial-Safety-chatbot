@@ -8,6 +8,8 @@ from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.chunk import conlltags2tree, tree2conlltags
 from pprint import pprint
+import pandas as pd
+import numpy as np
 
 #important parameters
 #1. max-df : it is used to remove terms that are very frequent, also known as "corpus specific stop words."
@@ -37,6 +39,8 @@ def count_vectorizer_features(data,ngrams,max_features=None):
   vectorizer = CountVectorizer(ngram_range=(1, ngrams), max_df=1.0, min_df=1, max_features=max_features)
   transformed_data=vectorizer.fit_transform(data)
   features=vectorizer.get_feature_names()
+  #df = pd.DataFrame(transformed_data.toarray(),columns=list(features))
+  #return df,transformed_data.toarray(),features
   return transformed_data.toarray(),features
 
 #TF IDF vectorizer
@@ -45,6 +49,8 @@ def tfidf_vectorizer_features(data,ngrams,max_features=None):
   vectorizer = TfidfVectorizer(ngram_range=(1, ngrams), max_df=1.0, min_df=1, max_features=max_features)
   transformed_data=vectorizer.fit_transform(data)
   features=vectorizer.get_feature_names()
+  # df = pd.DataFrame(transformed_data.toarray(),columns=list(features))
+  # return df,transformed_data.toarray(),features
   return transformed_data.toarray(),features
 
 #named entity recognition

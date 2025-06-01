@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Industrial Safety Project</title>
+
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://user-images.githubusercontent.com/20112458/49326597-773b7280-f57a-11e8-853d-20ed61d18b0d.png"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      /* body {
+        font-family: monospace;
+      } */
+      h1 {
+        background-color: yellow;
+        display: inline-block;
+        font-size: 3em;
+        margin: 0;
+        padding: 14px;
+      }
+      h3 {
+        color: black;
+        font-size: 20px;
+        margin-top: 3px;
+        text-align: center;
+      }
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: monospace;
+        font-size: 17px;
+      }
+      .userText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+      }
+      .userText span {
+        background-color: #808080;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      .botText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+      }
+      .botText span {
+        background-color: #4169e1;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 78%;
+        margin-top: 60px;
+        border: 1px solid green;
+      }
+      .box {
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><h4 style="color:white">Industrial Safety Chatbot</h4></a>
+      </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-light">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" id="model">Models</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="chatbot">Talk to us!</a>
+          </li>
+        </ul>
+        
+      </div>
+    </nav>
+    <br/>
+    <div id="modelDiv" class="row" style="margin: 10px;">
+      <div class="col-sm-12">
+        <ul class="nav nav-pills" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Import Data</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Augment Data</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Clean/preprocess Data</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Analyze models</button>
+          </li>
+        </ul>
+        <hr/>
+        <div class="tab-content">
+          <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <form action="/upload" method="POST" enctype="multipart/form-data" id="importForm">
+
+              <div class="form form-inline">
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Upload a file:</label>
+                  <input class="form-control" type="file" id="formFile" name="file">
+                  <span id="importform_msg"></span>
+                </div>
+              </div>
+      
+              <button type="button" class="btn btn-primary" id="btn_Upload">Upload</button>
+      
+            </form>
+          </div>
+          <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            
+              <table class="table table-borderless table-responsive" id="tbl_augment">
+                <th>Class Name</th>
+                <th>Replace with synonyms(0-100%)</th>
+                <th>Swap words(0-100%)</th>
+                <th>Insert random words(0-100%)</th>
+                <th>Delete random words(0-100%)</th>
+                <th>Count of augmented sentences per sentence(1-100)</th>
+                <tr id="I">
+                  <td>Accident Level I</td>
+                  <td><input type="text" id="I_syn" class="form-control"/></td>
+                  <td><input type="text" id="I_swp" class="form-control"/></td>
+                  <td><input type="text" id="I_ri" class="form-control"/></td>
+                  <td><input type="text" id="I_rd" class="form-control"/></td>
+                  <td><input type="text" id="I_aug" class="form-control"/></td>
+                 </tr> 
+                 <tr id="II">
+                  <td>Accident Level II</td>
+                  <td><input type="text" id="II_syn" class="form-control"/></td>
+                  <td><input type="text" id="II_swp" class="form-control"/></td>
+                  <td><input type="text" id="II_ri" class="form-control"/></td>
+                  <td><input type="text" id="II_rd" class="form-control"/></td>
+                  <td><input type="text" id="II_aug" class="form-control"/></td>
+                 </tr> 
+                 <tr id="III">
+                  <td>Accident Level III</td>
+                  <td><input type="text" id="III_syn" class="form-control"/></td>
+                  <td><input type="text" id="III_swp" class="form-control"/></td>
+                  <td><input type="text" id="III_ri" class="form-control"/></td>
+                  <td><input type="text" id="III_rd" class="form-control"/></td>
+                  <td><input type="text" id="III_aug" class="form-control"/></td>
+                 </tr> 
+                 <tr id="IV">
+                  <td>Accident Level IV</td>
+                  <td><input type="text" id="IV_syn" class="form-control"/></td>
+                  <td><input type="text" id="IV_swp" class="form-control"/></td>
+                  <td><input type="text" id="IV_ri" class="form-control"/></td>
+                  <td><input type="text" id="IV_rd" class="form-control"/></td>
+                  <td><input type="text" id="IV_aug" class="form-control"/></td>
+                 </tr> 
+                 <tr id="V">
+                  <td>Accident Level V</td>
+                  <td><input type="text" id="V_syn" class="form-control"/></td>
+                  <td><input type="text" id="V_swp" class="form-control"/></td>
+                  <td><input type="text" id="V_ri" class="form-control"/></td>
+                  <td><input type="text" id="V_rd" class="form-control"/></td>
+                  <td><input type="text" id="V_aug" class="form-control"/></td>
+                 </tr> 
+              </table>
+              <span id="augment_msg"></span>
+              <br/>
+              <button type="button" class="btn btn-primary" id="btn_augment">Augment Data</button>
+              <br/>
+          </div>
+          <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+            <button type="button" class="btn btn-success" id="btn_cleanDL">Clean data for deep learning models</button>
+            <br/>
+            <span id="clean_DL_msg"></span>
+            <br/>
+            <button type="button" class="btn btn-success" id="btn_cleanML">Clean data for machine learning models</button>
+            <br/>
+            <span id="clean_ML_msg"></span>
+          </div>
+          <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <div class="col-auto">
+              <label for="num_features" class="visually-hidden">Number of features to generate : </label>
+              <input type="text" readonly class="form-control-plaintext" id="lbl_num_features" value="Number of features to generate : ">
+            </div>
+            <div class="col-auto">
+              <label for="num_features" class="visually-hidden">Password</label>
+              <input type="text" class="form-control" id="num_features" placeholder="Enter a number greater than 0">
+            </div>
+            <br/>
+            <div class="col-auto">
+              <button type="button" class="btn btn-primary mb-3" id="btn_train_models">Train models</button>
+            </div>
+            <br/>
+            <div class="col-auto" id="model_list">
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+    <div id="chatbotDiv">
+      <center>
+      <h1>
+        <img
+          src="https://user-images.githubusercontent.com/20112458/49326597-773b7280-f57a-11e8-853d-20ed61d18b0d.png"
+          alt="Leah"
+          style="width:40px;height:40px;"
+        />Your Personal ChatBot
+      </h1>
+    </center>
+    <div class="box"></div>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+          <img
+            src="https://user-images.githubusercontent.com/20112458/49326597-773b7280-f57a-11e8-853d-20ed61d18b0d.png"
+            alt="LEAH"
+            style="width:40px;height:40px;"
+          />
+          <p class="botText">
+            <span>Hi! I'm Leah your personal ChatBot</span>
+          </p>
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" placeholder="Message" />
+        </div>
+      </div>
+    </div>
+    
+  </body>
+
+  <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function(e){
+      $("#modelDiv").hide();
+      $("#chatbotDiv").hide();
+      $("#importform_msg").text("");
+    })
+
+    $("#model").click(function(e){
+      $("#modelDiv").show();
+      $("#chatbotDiv").hide();
+    })
+
+    $("#chatbot").click(function(e){
+      $("#modelDiv").hide();
+      $("#chatbotDiv").show();
+    })
+
+    $("#btn_Upload").click(function(e){
+      debugger;
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/upload"); 
+      xhr.onload = function(event){ 
+          $("#importform_msg").text(event.target.response);
+      }; 
+      // or onerror, onabort
+      var formData = new FormData(document.getElementById("importForm")); 
+      xhr.send(formData);
+    })
+
+    $("#btn_augment").click(function(e){
+      debugger;
+      var augment_values = []; //initialize array;                           
+      var data=""; //empty var;
+
+
+      //Here traverse and  read input/select values present in each td of each tr, ;
+      $("#tbl_augment tr").not(":first").each(function(row, tr) {
+        var self = $(this);
+        $("#myModal").show();
+        var className = self.attr('id');
+        var syn_val = self.find("td:eq(1) input").val().trim();
+        var swap_val = self.find("td:eq(2) input").val().trim();
+        var rand_ins_val = self.find("td:eq(3) input").val().trim();
+        var rand_del_val = self.find("td:eq(4) input").val().trim();
+        var aug_val = self.find("td:eq(5) input").val().trim();
+          augment_values.push({
+            "className":  className,
+            "syn_val": syn_val,
+            "swap_val": swap_val,
+            "rand_ins_val": rand_ins_val,
+            "rand_del_val": rand_del_val,
+            "aug_val": aug_val
+          });
+      })
+
+      //Convert tableData array to JsonData
+      data=JSON.stringify(augment_values)
+      console.log(data);
+      $.ajax({
+      type: 'POST',
+      url: "/augment",
+      data: data,
+      contentType: 'application/json;charset=UTF-8',
+      success: function(data)
+      {
+                debugger;
+                console.log(data)
+                 $('#augment_msg').html(data);
+                 $("#myModal").hide();
+               }
+            });
+    })
+
+    $("#btn_cleanDL").click(function(e){
+      debugger;
+      $("#myModal").show();
+      $.ajax({
+      type: 'POST',
+      url: "/clean_dl_data",
+      data: "",
+      contentType: 'application/json;charset=UTF-8',
+      success: function(data){
+                 $('#clean_DL_msg').html(data);
+                 $("#myModal").hide();
+               }
+            });
+      })
+
+    $("#btn_cleanML").click(function(e){
+      debugger;
+      $("#myModal").show();
+      $.ajax({
+      type: 'POST',
+      url: "/clean_ml_data",
+      data: "",
+      contentType: 'application/json;charset=UTF-8',
+      success: function(data){
+                 $('#clean_ML_msg').html(data);
+                 $("#myModal").hide();
+               }
+            });
+      })
+
+    $("#btn_train_models").click(function(e){
+      $("#myModal").show();
+      var num_features = $('#num_features').val()
+      $.ajax({
+      type: 'POST',
+      url: "/load_ml_models",
+      data: JSON.stringify(num_features),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(data){
+                 debugger;
+                 $('#model_list').html(data);
+                 $("#myModal").hide();
+               }
+            });
+    })
+
+    function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+            $("#chatbox").append(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+
+  </script>
+</html>
+

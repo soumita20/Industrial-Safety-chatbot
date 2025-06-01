@@ -22,6 +22,7 @@ from sklearn.metrics import multilabel_confusion_matrix,classification_report,co
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.model_selection import GridSearchCV
+import pickle
 
 def train_test_model(model, method, X_train, X_test, y_train, y_test, of_type, index, scale, report, save_model):
     
@@ -81,14 +82,13 @@ def train_test_model(model, method, X_train, X_test, y_train, y_test, of_type, i
     
     # Save the model
     if save_model == "yes":
-      filename = 'finalised_model.sav'
+      filename = 'finalised_model'+'_'+method+'.pkl'
       pickle.dump(model, open(filename, 'wb'))
       
     return resultsDf  # return all the metrics along with predictions
 
 
-def train_test_allmodels(X_train_common, X_test_common, y_train, y_test, scale):
-
+def train_test_allmodels(X_train_common, X_test_common, y_train, y_test, scale,report,save_model):
     # define classification models
     models=[['LogisticRegression',LogisticRegression(solver='lbfgs', multi_class='multinomial', random_state = 1)],
         ['KNeighborsClassifier',KNeighborsClassifier(n_neighbors = 3)],
@@ -110,7 +110,7 @@ def train_test_allmodels(X_train_common, X_test_common, y_train, y_test, scale):
     i = 1
     for name, classifier in models:
         # Train and Test the model
-        reg_resultsDf = train_test_model(classifier, name, X_train_common, X_test_common, y_train, y_test, 'none', i, scale, 'yes', 'no')
+        reg_resultsDf = train_test_model(classifier, name, X_train_common, X_test_common, y_train, y_test, 'none', i, scale, report, save_model)
 
         # Store the accuracy results for each model in a dataframe for final comparison
         resultsDf_common = pd.concat([resultsDf_common, reg_resultsDf])
@@ -127,7 +127,7 @@ def multiclass_logloss(actual, predicted, eps=1e-15):
     if len(actual.shape) == 1:
         actual2 = np.zeros((actual.shape[0], predicted.shape[1]))
         for i, val in enumerate(actual):
-            actual2[i, val] = 1
+          actual2[i, val] = 1
         actual = actual2
 
     clip = np.clip(predicted, eps, 1 - eps)
