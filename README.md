@@ -59,14 +59,17 @@ A multi-class text and feature classification pipeline that:
 | BaggingClassifier | 94.17% | 0.9417 |
 | AdaBoostClassifier | 45.79% | 0.4553 |
 
-### Deep Learning Model (Keras)
+### Deep Learning Models (Keras)
 
-| Split | Loss | Accuracy |
-|---|---|---|
-| Train | 0.039 | **99.14%** |
-| Test | 0.155 | **94.60%** |
+| Model | Train Loss | Train Accuracy | Test Loss | Test Accuracy |
+|---|---|---|---|---|
+| Simple Neural Network | 1.377 | 38.83% | 1.583 | 34.67% |
+| LSTM | 1.609 | 20.02% | 1.609 | 20.09% |
+| Bidirectional LSTM | **0.039** | **99.14%** | **0.155** | **94.60%** |
 
-> **Best overall model: CatBoostClassifier** (95.57% test accuracy, F1: 0.9557)
+> **Best deep learning model: Bidirectional LSTM** (94.60% test accuracy)  
+> Simple NN and LSTM underperformed — likely due to limited data (425 rows) 
+> and insufficient sequence structure for standard LSTM to learn from.
 
 ---
 
