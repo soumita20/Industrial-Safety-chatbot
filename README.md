@@ -9,7 +9,7 @@
 ## About My Contribution
 This repository is based on a forked dataset structure but the **entire solution — 
 data pipeline, model experimentation, Flask API, and frontend — was designed, 
-developed, and implemented end-to-end by Soumita Chowdhury**.
+developed, and implemented end-to-end by myself, Soumita Chowdhury**.
 
 ---
 
