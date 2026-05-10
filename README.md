@@ -81,9 +81,9 @@ A multi-class text and feature classification pipeline that:
 - **Frontend:** Bootstrap + jQuery *(Work in Progress — UI integration 
   with Flask API under active debugging)*
 - **Data:** pandas, NumPy, NLTK
-
 ---
 
+```
 ## Project Structure
 
 Industrial-Safety-chatbot/
@@ -93,6 +93,8 @@ Industrial-Safety-chatbot/
 ├── models/                 # Saved model files (.pkl, .h5)
 ├── requirements.txt        # Dependencies
 └── README.md
+
+```
 
 ## How to Run
 
