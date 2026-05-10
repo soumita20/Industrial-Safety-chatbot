@@ -141,4 +141,5 @@ python app.py
 - [ ] Add Docker support for containerised deployment
 - [ ] Expand dataset beyond 425 rows
 - [ ] Add SHAP explainability for model predictions
+- [ ] Create a UI chatbot using this model
 
